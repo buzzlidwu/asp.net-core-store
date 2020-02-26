@@ -1,0 +1,68 @@
+﻿@page
+@model asp.net_core_store.IndexModel
+
+@{
+    ViewData["Title"] = "OrderList";
+}
+
+    <h1>@ViewData["Title"]</h1>
+<form method="POST">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                CheckStatus
+            </th>
+            <th>
+                Order Item
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].Status)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Order)
+            {
+                <tr>
+                    <td>
+                        @if (item.Status == true)
+                        {
+                            <input type="checkbox" id="subscribeNews" name="subscribe" disabled="true">
+                        }
+                        else
+                        {
+                            <input  type="checkbox" name="AreChecked" value="@item.Id" />
+                        }
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.ItemName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cost)
+                    </td>
+                    <td>
+                        @if (item.Status == true)
+                        {
+                            <span>To be shipped</span>
+                        }
+                        else
+                        {
+                            <span>Payment completed</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" asp-page-handler="JoinList" class="btn btn-primary">Confirm</button>
+</form>
